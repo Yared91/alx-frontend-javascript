@@ -7,9 +7,12 @@ export default function handleProfileSignup(firstName, lastName, fileName) {
     uploadPhoto(fileName),
   ]).then((values) => {
     const arr = [];
-    for (const item of values) {
-      arr.push({ status: item.status, value: item.value || item.reason });
-    }
+    values.forEach((val) => {
+      arr.push({
+        status: val.status,
+        value: val.status === 'fulfilled' ? val.value : `Error: ${val.reason.message}`,
+      });
+    });
     return arr;
   });
 }
